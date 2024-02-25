@@ -1,17 +1,26 @@
 import axios from "axios";
 import { useEffect } from "react";
-import { useParams } from "react-router-dom"
+import {useNavigate, useParams } from "react-router-dom";
+import { URL_API } from "../config/rutas";
 
-export function BorrarUsuario(){
+export function BorrarUsuario() {
     const params = useParams();
-    useEffect(()=>{
-        async function borrar(){
-            const res=axios.get("http://localhost:3000/api/borrarUsuario/"+params.id);
+    const navigate = useNavigate();
 
+    useEffect(() => {
+        async function borrar() {
+                const res = await axios.get(URL_API+"borrarUsuario/"+ params.id);
+                console.log(res);
+                navigate("/");
+        
         }
+
         borrar();
-    },[params.id]);
-    return(
-        <h1>Borrar usuario</h1>
-    )
+    }, [navigate, params.id]);
+
+    return (
+        <div>
+            <h1>Usuario Borrado</h1>
+       </div>
+    );
 }
